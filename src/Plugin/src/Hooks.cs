@@ -1,4 +1,4 @@
-namespace H3VRMod
+namespace ashpuppyscripts
 {
 	public class Hooks
 	{

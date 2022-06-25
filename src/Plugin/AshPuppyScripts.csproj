@@ -5,6 +5,7 @@
         <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <BaseOutputPath>H:\H3 modding\ash-puppyscripts\src\Plugin\build</BaseOutputPath>
     </PropertyGroup>
     
     <ItemGroup>       
@@ -18,6 +19,12 @@
       <Reference Include="MMHOOK_Assembly-CSharp">
         <HintPath>..\libs\MMHOOK_Assembly-CSharp.dll</HintPath>
       </Reference>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Update="src\Plugin.cs">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Compile>
     </ItemGroup>
 
 </Project>
