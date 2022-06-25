@@ -1,7 +1,6 @@
-# H3VR.EmptyBepInEx
-Template BepInEx plugin for H3VR. 
+# Ashes PuppyScripts Scripts
+My half of the joint code library, developed with Arpy
 
-Includes
-- Autobuilding Thunderstore package
-- Stripped publicized H3VR assembly
-- MMHook H3VR assembly
+Check out PuppyScripts on Thunderstore: https://h3vr.thunderstore.io/package/Arpy/PuppyScripts/
+
+Please use the Issues Page or DM me on Discord fsce#3269 for any bug reports or issues.
