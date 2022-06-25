@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net35</TargetFramework>
         <LangVersion>9</LangVersion>
-        <Nullable>enable</Nullable>
+        <Nullable>warnings</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <BaseOutputPath>H:\H3 modding\ash-puppyscripts\src\Plugin\build</BaseOutputPath>
     </PropertyGroup>
