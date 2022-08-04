@@ -4,26 +4,27 @@ using UnityEngine;
 using FistVR;
 namespace ashpuppyscripts
 {
-    public class VariableFireRateOpenBolt : MonoBehaviour
+    public class VariableFireRateClosedBolt : MonoBehaviour
     {
-        public OpenBoltReceiverBolt OpenBolt;
+        public ClosedBolt ClosedBolt;
         public float minSpringStiffness = 100;
         public float maxSpringStiffness = 1000;
         private bool HasChanged = false;
+#if !DEBUG
         public void FixedUpdate()
         {
-            if (!HasChanged && OpenBolt.transform.position == OpenBolt.Point_Bolt_Forward.position)
+            if (!HasChanged && ClosedBolt.transform.position == ClosedBolt.Point_Bolt_Forward.position)
             {
                 HasChanged = true;
-                OpenBolt.BoltSpringStiffness = Random.Range(minSpringStiffness, maxSpringStiffness);
+                ClosedBolt.SpringStiffness = Random.Range(minSpringStiffness, maxSpringStiffness);
 
             }
-            else if (HasChanged && OpenBolt.transform.position != OpenBolt.Point_Bolt_Forward.position)
+            else if (HasChanged && ClosedBolt.transform.position != ClosedBolt.Point_Bolt_Forward.position)
             {
                 HasChanged = false;
             }
         }
-
+#endif
     }
 
 }
