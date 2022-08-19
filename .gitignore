@@ -4,7 +4,11 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # DLLs in build
-net35/*.dll
+Plugin/build/Debug/net35/*.dll
+!AshPuppyScripts.dll
+Plugin/build/Game/net35/*.dll
+!AshPuppyScripts.dll
+Plugin/build/Release/net35/*.dll
 !AshPuppyScripts.dll
 
 
