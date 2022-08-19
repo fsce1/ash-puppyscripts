@@ -6,7 +6,7 @@
         <Nullable>warnings</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <BaseOutputPath>H:\H3 modding\ash-puppyscripts\Plugin\build</BaseOutputPath>
-        <Configurations>Release;Debug</Configurations>
+        <Configurations>Release;Debug;Game</Configurations>
     </PropertyGroup>
     
     <ItemGroup>       
