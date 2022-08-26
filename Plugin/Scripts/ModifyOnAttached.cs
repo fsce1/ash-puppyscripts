@@ -8,7 +8,7 @@ namespace ashpuppyscripts
 {
     public class ModifyOnAttached : MonoBehaviour
     {
-        #region 
+        #region Vars
         bool HasModifiedGun = false;
         bool HasDemodifiedGun = false;
         public FVRFireArmAttachmentMount AttachmentMount;

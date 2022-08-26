@@ -14,11 +14,6 @@ namespace ashpuppyscripts
 
         public override void OnInspectorGUI()
         {
-            serializedObject.Update();
-
-            var screenRect = GUILayoutUtility.GetRect(1, 1);
-            var vertRect = EditorGUILayout.BeginVertical();
-            EditorGUI.DrawRect(new Rect(screenRect.x - 13, screenRect.y + 4, screenRect.width + 17, vertRect.height + 6), new Color(201f / 255f, 179f / 255f, 201f / 255f));
             #region GUIHeader
             GUIStyle GUIHeader = new GUIStyle(EditorStyles.boldLabel);
             GUIHeader.fontStyle = FontStyle.Bold;
@@ -30,6 +25,10 @@ namespace ashpuppyscripts
             GUIStyle GUIHelp = new GUIStyle(EditorStyles.helpBox);
             //GUIHelp.font = Font(Mac11_Stock); lol
             #endregion
+            serializedObject.Update();
+            var screenRect = GUILayoutUtility.GetRect(1, 1);
+            var vertRect = EditorGUILayout.BeginVertical();
+            EditorGUI.DrawRect(new Rect(screenRect.x - 13, screenRect.y + 4, screenRect.width + 17, vertRect.height + 6), new Color(201f / 255f, 179f / 255f, 201f / 255f));
             ModifyOnAttached moa = (ModifyOnAttached)base.target;
 
             EditorGUILayout.LabelField("Modify On Attached", GUIHeader);
@@ -103,9 +102,10 @@ namespace ashpuppyscripts
 
             }
             #endregion
-            moa.ChangesPoseOverride = EditorGUILayout.Toggle(new GUIContent("Changes PoseOverrides", "Changes the PoseOverride and PoseOverrideTouch on Attach, and reverts changes on Detach"), moa.ChangesPoseOverride);
+            #region ChangesPoseOverride
             if (moa.ChangesPoseOverride)
             {
+                moa.ChangesPoseOverride = EditorGUILayout.Toggle(new GUIContent("Changes PoseOverrides", "Changes the PoseOverride and PoseOverrideTouch on Attach, and reverts changes on Detach"), moa.ChangesPoseOverride);
                 EditorGUI.indentLevel = 2;
                 moa.NewRecoilHolder = (Transform)EditorGUILayout.ObjectField(new GUIContent("Recoil Holder"), moa.NewRecoilHolder, typeof(Transform), true);
                 EditorGUILayout.HelpBox("Recoil Holder can be same as Original, or a new object. Please make sure your new PoseOverrides are childs of the Recoil Holder you set in this script.", MessageType.Info);
@@ -113,9 +113,6 @@ namespace ashpuppyscripts
                 moa.NewPoseOverrideTouch = (Transform)EditorGUILayout.ObjectField(new GUIContent("New Pose Override Touch"), moa.NewPoseOverrideTouch, typeof(Transform), true);
                 EditorGUI.indentLevel = 0;
             }
-
-            #region ChangesPoseOverride
-
             #endregion
 
             switch (moa.FireArm)
@@ -137,8 +134,6 @@ namespace ashpuppyscripts
                     }
                     break;
             }
-
-
 
             EditorGUILayout.EndVertical();
             serializedObject.ApplyModifiedProperties();

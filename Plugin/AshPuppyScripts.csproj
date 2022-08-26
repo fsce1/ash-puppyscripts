@@ -5,7 +5,7 @@
         <LangVersion>9</LangVersion>
         <Nullable>warnings</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <BaseOutputPath>H:\H3 modding\ash-puppyscripts\Plugin\build</BaseOutputPath>
+        <BaseOutputPath>C:/H3/ash-puppyscripts\Plugin\build</BaseOutputPath>
         <Configurations>Release;Debug;Game</Configurations>
     </PropertyGroup>
     
@@ -20,6 +20,9 @@
     <ItemGroup>
       <Reference Include="MMHOOK_Assembly-CSharp">
         <HintPath>..\libs\MMHOOK_Assembly-CSharp.dll</HintPath>
+      </Reference>
+      <Reference Include="MovableWeaponPart">
+        <HintPath>..\libs\MovableWeaponPart.dll</HintPath>
       </Reference>
     </ItemGroup>
     
