@@ -46,12 +46,32 @@ namespace ashpuppyscripts
             HingeJointRigidBody.isKinematic = true;
             if (!UsesDebug) { DebugMovableWeaponPartHeld = false; }
             t = new System.Timers.Timer(EjectionSpeedInMs);
-            t.Elapsed += EjectRound();
+            t.Elapsed += T_Elapsed;
             t.AutoReset = true;
             t.Enabled = true;
         }
 
-
+        private void T_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (!UsesDebug)
+            {
+                if (Mag.HasARound() && !IsLocked)
+                {
+                    GameObject Prefab = Mag.RemoveRound(true);
+                    Instantiate(Prefab, EjectionPoint);
+                    Prefab.transform.parent = null;
+                    //t.Start();
+                }
+                else { t.Stop(); }
+            }
+            if (DebugRoundCount > 0 && !IsLocked)
+            {
+                Debug.Log("Ejected One Round!");
+                DebugRoundCount -= 1;
+                //t.Start();
+            }
+            else { t.Stop(); }
+        }
 
         public void FixedUpdate()
         {
@@ -109,31 +129,6 @@ namespace ashpuppyscripts
             if (AudioSource != null) { AudioSource.PlayOneShot(LatchOpen); }
 
             t.Start();
-        }
-        public System.Timers.ElapsedEventHandler EjectRound()
-        {
-            if (!UsesDebug)
-            {
-                if (Mag.HasARound() && !IsLocked)
-                {
-                    GameObject Prefab = Mag.RemoveRound(true);
-                    Instantiate(Prefab, EjectionPoint);
-                    Prefab.transform.parent = null;
-                    t.Start();
-                    return null;
-                }
-                t.Stop();
-                return null;
-            }
-            if (DebugRoundCount > 0 && !IsLocked)
-            {
-                Debug.Log("Ejected One Round!");
-                DebugRoundCount -= 1;
-                t.Start();
-                return null;
-            }
-            t.Stop();
-            return null;
         }
 
 
