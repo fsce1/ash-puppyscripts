@@ -31,6 +31,10 @@ namespace ashpuppyscripts
                     HasChanged = false;
                     return;
                 }
+
+            }
+            else if(OpenBolt != null)
+            {
                 if (!HasChanged && OpenBolt.transform.position == OpenBolt.Point_Bolt_Forward.position)
                 {
                     OpenBolt.BoltSpringStiffness = Random.Range(minSpringStiffness, maxSpringStiffness);
@@ -45,7 +49,7 @@ namespace ashpuppyscripts
                     return;
                 }
             }
-
+            else { Debug.Log("No Bolt assigned to VariableFireRate.cs!"); }
         }
 #endif
     }
