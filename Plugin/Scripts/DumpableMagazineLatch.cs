@@ -7,15 +7,24 @@ namespace ashpuppyscripts
 { //to-do, fix timer
     public class DumpableMagazineLatch : FVRInteractiveObject
     {
+        // Essential Vars
         public FVRFireArmMagazine Mag;
         public Rigidbody HingeJointRigidBody;
         public MovableWeaponPart MovableWeaponPart;
         public float EjectionSpeedInMs;
         public Transform EjectionPoint;
+        // Audio Vars
         public AudioSource AudioSource;
         public AudioClip LatchOpen;
         public AudioClip LatchClose;
-
+        // Moving Latch Vars
+        public Transform MovingLatch;
+        public Vector3 StartPos;
+        public Vector3 StopPos;
+        public float MoveSpeed;
+        private bool animateLatch = false;
+        private bool hasHitStopPoint = false;
+        // Private / Debug Vars
         bool IsLocked = true;
         private float StartXRot;
         private System.Timers.Timer t;
@@ -26,57 +35,25 @@ namespace ashpuppyscripts
         [HideInInspector]
         public bool UsesDebug = false;
 
-
-        public Transform MovingLatch;
-        public Vector3 StartPos;
-        public Vector3 StopPos;
-        public float MoveSpeed;
-        private bool animateLatch = false;
-        private bool hasHitStopPoint = false;
-
-
-
 #if !DEBUG
-        public override void Start()
+        public override void Start()//Start Params
         {
             base.Start();
+
             this.IsSimpleInteract = true;
             StartXRot = HingeJointRigidBody.gameObject.transform.localEulerAngles.x;
             MovableWeaponPart.SetAllCollidersToLayer(true, "NoCol");
             HingeJointRigidBody.isKinematic = true;
+
             if (!UsesDebug) { DebugMovableWeaponPartHeld = false; }
+
             t = new System.Timers.Timer(EjectionSpeedInMs);
-            t.Elapsed += T_Elapsed;
+            t.Elapsed += TimerElapsed;
             t.AutoReset = true;
             t.Enabled = true;
         }
-
-        private void T_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        public virtual void FVRLateUpdate()//Previously FixedUpdate()
         {
-            if (!UsesDebug)
-            {
-                if (Mag.HasARound() && !IsLocked)
-                {
-                    GameObject Prefab = Mag.RemoveRound(true);
-                    Instantiate(Prefab, EjectionPoint);
-                    Prefab.transform.parent = null;
-                    //t.Start();
-                }
-                else { t.Stop(); }
-            }
-            if (DebugRoundCount > 0 && !IsLocked)
-            {
-                Debug.Log("Ejected One Round!");
-                DebugRoundCount -= 1;
-                //t.Start();
-            }
-            else { t.Stop(); }
-        }
-
-        public void FixedUpdate()
-        {
-
-
             if (animateLatch && MovingLatch != null)
             {
                 if (!hasHitStopPoint)
@@ -96,26 +73,22 @@ namespace ashpuppyscripts
                 else { animateLatch = false; hasHitStopPoint = false; }
             }//Moving Part Code, maybe can be cleaned up a bit more?
 
-
-
-            this.SetAllCollidersToLayer(true, "NoCol");
-            if (IsLocked) { this.SetAllCollidersToLayer(true, "Interactable"); }
+            //if (IsLocked) this.SetAllCollidersToLayer(true, "Interactable");
+            //else this.SetAllCollidersToLayer(true, "NoCol");
 
             if (MovableWeaponPart.IsHeld || DebugMovableWeaponPartHeld)
             {
-                HingeJointRigidBody.isKinematic = true;
-                if (HingeJointRigidBody.gameObject.transform.localEulerAngles.x == StartXRot)
+                HingeJointRigidBody.isKinematic = true; //Allows grabbing to properly move latch
+                if (HingeJointRigidBody.gameObject.transform.localEulerAngles.x == StartXRot) //
                 {
-                    //possibly re-write so all of the locking stuff happens in the if(IsLocked) bool instead of inside here (so its cleaner)
-                    IsLocked = true;
+                    IsLocked = true; //Locks latch
                     MovableWeaponPart.SetAllCollidersToLayer(true, "NoCol");
                     MovableWeaponPart.ForceBreakInteraction();
-                    if (AudioSource != null) { AudioSource.PlayOneShot(LatchClose); }
-                    return;
+                    if (AudioSource != null) AudioSource.PlayOneShot(LatchClose);
                 }
-                return;
             }
-            else if (!IsLocked) { HingeJointRigidBody.isKinematic = false; }
+            else if (!IsLocked) { HingeJointRigidBody.isKinematic = false; this.SetAllCollidersToLayer(true, "NoCol"); }
+            else this.SetAllCollidersToLayer(true, "Interactable");
         }
         public override void SimpleInteraction(FVRViveHand hand) //When Latch is pressed
         {
@@ -130,8 +103,27 @@ namespace ashpuppyscripts
 
             t.Start();
         }
-
-
+        private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)//When timer elapsed
+        {
+            if (!UsesDebug)
+            {
+                if (Mag.HasARound() && !IsLocked)
+                {
+                    GameObject roundPrefab = Instantiate(Mag.RemoveRound(false), EjectionPoint.position, EjectionPoint.rotation);/*Mag.RemoveRound(true);*/
+                    //Instantiate(Prefab, EjectionPoint);
+                    //Prefab.transform.parent = null;
+                    //t.Start();
+                }
+                else { t.Stop(); }
+            }
+            if (DebugRoundCount > 0 && !IsLocked)
+            {
+                Debug.Log("Ejected One Round!");
+                DebugRoundCount -= 1;
+                //t.Start();
+            }
+            else { t.Stop(); }
+        }
 #endif
     }
 
