@@ -52,8 +52,11 @@ namespace ashpuppyscripts
             t.AutoReset = true;
             t.Enabled = true;
         }
-        public virtual void FVRLateUpdate()//Previously FixedUpdate()
+        public void FixedUpdate()//Previously FixedUpdate()
         {
+
+            base.FVRUpdate();
+
             if (animateLatch && MovingLatch != null)
             {
                 if (!hasHitStopPoint)
@@ -73,8 +76,8 @@ namespace ashpuppyscripts
                 else { animateLatch = false; hasHitStopPoint = false; }
             }//Moving Part Code, maybe can be cleaned up a bit more?
 
-            //if (IsLocked) this.SetAllCollidersToLayer(true, "Interactable");
-            //else this.SetAllCollidersToLayer(true, "NoCol");
+            if (IsLocked) this.SetAllCollidersToLayer(true, "Interactable");
+            else this.SetAllCollidersToLayer(true, "NoCol");
 
             if (MovableWeaponPart.IsHeld || DebugMovableWeaponPartHeld)
             {
@@ -85,10 +88,11 @@ namespace ashpuppyscripts
                     MovableWeaponPart.SetAllCollidersToLayer(true, "NoCol");
                     MovableWeaponPart.ForceBreakInteraction();
                     if (AudioSource != null) AudioSource.PlayOneShot(LatchClose);
+                    return;
                 }
+                return;
             }
-            else if (!IsLocked) { HingeJointRigidBody.isKinematic = false; this.SetAllCollidersToLayer(true, "NoCol"); }
-            else this.SetAllCollidersToLayer(true, "Interactable");
+            if (!IsLocked) { HingeJointRigidBody.isKinematic = false; this.SetAllCollidersToLayer(true, "NoCol"); }
         }
         public override void SimpleInteraction(FVRViveHand hand) //When Latch is pressed
         {

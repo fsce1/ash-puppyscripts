@@ -101,8 +101,7 @@ namespace ashpuppyscripts
         }
         public void FixedUpdate()
         {
-            Debug.Log(FireArm.m_recoilLinearXYBase);
-            Debug.Log(FireArm.m_recoilPoseHolderLocalPosStart);
+
             //Non-functional, shelved for now
             //if (ModifyOnHover)
             //{

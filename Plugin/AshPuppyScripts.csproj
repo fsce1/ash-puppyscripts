@@ -5,7 +5,7 @@
         <LangVersion>9</LangVersion>
         <Nullable>warnings</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <BaseOutputPath>C:/H3/ash-puppyscripts\Plugin\build</BaseOutputPath>
+        <BaseOutputPath>H:\H3 modding\ash-puppyscripts\Plugin\build</BaseOutputPath>
         <Configurations>Release;Debug;Game</Configurations>
     </PropertyGroup>
     
