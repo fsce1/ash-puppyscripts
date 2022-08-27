@@ -24,6 +24,9 @@
       <Reference Include="MovableWeaponPart">
         <HintPath>..\libs\MovableWeaponPart.dll</HintPath>
       </Reference>
+      <Reference Include="Sodalite">
+        <HintPath>..\libs\Sodalite.dll</HintPath>
+      </Reference>
     </ItemGroup>
     
     <ItemGroup>
